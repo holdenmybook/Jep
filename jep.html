@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jeopardy Game</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+    td {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Jeopardy Game</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Category 1</th>
+      <th>Category 2</th>
+      <th>Category 3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td onclick="showQuestion(this, 'What is the capital of France?')">100</td>
+      <td onclick="showQuestion(this, 'What is the largest mammal?')">100</td>
+      <td onclick="showQuestion(this, 'Who wrote Romeo and Juliet?')">100</td>
+    </tr>
+    <tr>
+      <td onclick="showQuestion(this, 'What is the currency of Japan?')">200</td>
+      <td onclick="showQuestion(this, 'What is the powerhouse of the cell?')">200</td>
+      <td onclick="showQuestion(this, 'What is the capital of Australia?')">200</td>
+    </tr>
+    <!-- Add more rows as needed -->
+  </tbody>
+</table>
+
+<div id="question-modal" style="display: none;">
+  <h2 id="question"></h2>
+  <input type="text" id="answer" placeholder="Your Answer">
+  <button onclick="checkAnswer()">Submit Answer</button>
+</div>
+
+<script>
+  let currentQuestionElement;
+  let currentQuestion;
+  let score = 0;
+
+  function showQuestion(element, question) {
+    currentQuestionElement = element;
+    currentQuestion = question;
+    document.getElementById('question').textContent = question;
+    document.getElementById('question-modal').style.display = 'block';
+  }
+
+  function checkAnswer() {
+    const userAnswer = document.getElementById('answer').value.toLowerCase();
+    const correctAnswer = getCorrectAnswer(currentQuestion);
+
+    if (userAnswer === correctAnswer.toLowerCase()) {
+      alert('Correct!');
+      score += parseInt(currentQuestionElement.textContent);
+      currentQuestionElement.textContent = '';
+      document.getElementById('question-modal').style.display = 'none';
+    } else {
+      alert('Incorrect. The correct answer is: ' + correctAnswer);
+    }
+
+    // You can add more logic here for the end of the game or next steps.
+  }
+
+  function getCorrectAnswer(question) {
+    // Implement logic to get the correct answer for the given question
+    // You can store answers in an object or array, for example.
+    const answers = {
+      'What is the capital of France?': 'Paris',
+      'What is the largest mammal?': 'Blue Whale',
+      'Who wrote Romeo and Juliet?': 'William Shakespeare',
+      'What is the currency of Japan?': 'Yen',
+      'What is the powerhouse of the cell?': 'Mitochondria',
+      'What is the capital of Australia?': 'Canberra',
+      // Add more answers as needed
+    };
+
+    return answers[question];
+  }
+</script>
+
+</body>
+</html>
